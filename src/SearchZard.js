@@ -5,10 +5,7 @@ import React, { Component } from 'react';
 //      user selects cauldron from a select dropdown
 //      whatever the user clicks on, we will save that selection in state
 //      on submit, we pass the user's selection up to app.js through a callback passed in through props
-//      
-//  we need a form
-//  we need state
-//  we need a function from props 
+
 class SearchZard extends Component {
     constructor() {
         super();
@@ -17,12 +14,12 @@ class SearchZard extends Component {
         }
     }
 
+    // get user selection of which group of wizards they want to investigate
     getUserChoice = e => {
         e.preventDefault();
         
         this.setState({
-            userInput: e.target.value,
-        
+            userInput: e.target.value
         });
     }
 
