@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import axios from 'axios';
+import SearchZard from './SearchZard';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      allZards: [],
+      deathEaters: [],
+      userSelection: ''
+    }
+  }
+
+  componentDidMount() {
+    axios({
+      method: 'get',
+      url: 'https://www.potterapi.com/v1/characters',
+      params: {
+        key: '$2a$10$Pf/P4Ty2dYB3PONill9gB.L5b1xXzIfkvH5oREH8ideQ6Hcm4/VNi',
+        deathEater: true
+      }
+    }).then(response => {
+      this.setState({
+        allZards: response.data
+      });
+    })
+  }
+  // get user selection of which group of wizards they want to investigate
+  // filter characters for just those in the selected wizard group (aka cauldron)
+  // filter cauldron to find death eaters
+  // show names of death eaters on the page
+
+  getCauldron = (e, targetCauldron) => { 
+    e.preventDefault();
+
+    this.setState({
+      userSelection: targetCauldron
+    })
+  }
+  
+  render() {
+  
+    return (
+      <div className="App">
+        <header>
+          <h1>Find and Destroy the Death Eaters</h1>
+        </header>
+        <SearchZard choiceOfCauldron={this.getCauldron}/>
+      </div>
+    );
+  }
 }
 
 export default App;
